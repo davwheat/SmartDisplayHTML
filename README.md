@@ -11,4 +11,4 @@ SmartDisplay is an open source, customisable HTML page which displays useful and
 
 ## Google Calendar API setup
 
-1. Use the project creation wizard: https://console.developers.google.com/flows/enableapi?apiid=calendar&pli=1
+Please follow the instructions **under Step 1 only**: https://developers.google.com/calendar/quickstart/js#prerequisites
