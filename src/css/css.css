@@ -1,0 +1,39 @@
+html,
+body {
+  font-family: "Work Sans", "Kayak", "Manrope", "Google Sans", "Product Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #ddd;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  margin: 0;
+  padding: 0;
+}
+
+#time .primary,
+#time .secondary {
+  font-weight: 200;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 8px;
+}
+
+#time .primary {
+  font-size: 8rem;
+  display: inline-block;
+}
+
+#time .secondary {
+  font-weight: 300;
+  font-size: 4rem;
+  display: inline-block;
+  color: #aaa;
+}
+/*# sourceMappingURL=css.css.map */

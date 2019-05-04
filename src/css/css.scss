@@ -1,0 +1,48 @@
+$fontStack: "Work Sans", "Kayak", "Manrope", "Google Sans", "Product Sans",
+  "Segoe UI", "Helvetica Neue", sans-serif;
+
+$darkestColour: #000;
+$darkerColour: #222;
+$darkColour: #555;
+$lightColour: #aaa;
+$lighterColour: #ddd;
+$lightestColour: #eee;
+
+html,
+body {
+  font-family: $fontStack;
+  margin: 0;
+  padding: 0;
+  background: $darkestColour;
+  color: $lighterColour;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  margin: 0;
+  padding: 0;
+}
+
+#time .primary,
+#time .secondary {
+  font-weight: 200;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 8px;
+}
+
+#time .primary {
+  font-size: 8rem;
+  display: inline-block;
+}
+
+#time .secondary {
+  font-weight: 300;
+  font-size: 4rem;
+  display: inline-block;
+  color: $lightColour;
+}
