@@ -2,8 +2,8 @@ $fontStack: "Work Sans", "Kayak", "Manrope", "Google Sans", "Product Sans",
   "Segoe UI", "Helvetica Neue", sans-serif;
 
 $darkestColour: #000;
-$darkerColour: #222;
-$darkColour: #555;
+$darkerColour: #151515;
+$darkColour: #222;
 $lightColour: #aaa;
 $lighterColour: #ddd;
 $lightestColour: #eee;
@@ -11,7 +11,7 @@ $lightestColour: #eee;
 html,
 body {
   font-family: $fontStack;
-  margin: 0;
+  margin: 8px 12px;
   padding: 0;
   background: $darkestColour;
   color: $lighterColour;
@@ -32,7 +32,6 @@ span {
 #time .secondary {
   font-weight: 200;
   font-variant-numeric: tabular-nums lining-nums;
-  margin: 8px;
 }
 
 #time .primary {
@@ -45,4 +44,103 @@ span {
   font-size: 4rem;
   display: inline-block;
   color: $lightColour;
+}
+
+#date .primary {
+  font-weight: 300;
+  font-size: 3rem;
+  display: inline-block;
+}
+
+#date .secondary {
+  font-weight: 100;
+  font-size: 2rem;
+  display: inline-block;
+  color: $lightColour;
+}
+
+#date .primary,
+#date .secondary {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+#calendarAppointments {
+  max-height: 60%;
+  max-height: 60vh;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+#calendarAppointments::after {
+  display: block;
+  position: absolute;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 255) 100%
+  );
+  height: 15rem;
+  width: 100%;
+  bottom: 0;
+  content: "";
+}
+
+#calendarAppointments > div {
+  padding: 8px;
+  margin: auto;
+  margin-bottom: 2.25rem;
+  width: 85%;
+  display: block;
+}
+
+#calendarAppointments > div > h3 {
+  font-weight: 300;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#calendarAppointments > div span:first-of-type {
+  float: left;
+}
+
+#calendarAppointments > div span:last-of-type {
+  float: right;
+}
+
+#calendarAppointments > div span,
+#calendarAppointments > div p {
+  display: block;
+  font-weight: 200;
+  font-size: 1.1rem;
+  width: max-content;
+}
+
+#calendarAppointments > div > div::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#calendarAppointments > div::after {
+  content: "\A0";
+  position: absolute;
+  height: 1px;
+  width: 90%;
+  margin-left: -2.5%;
+  margin-top: 1.5rem;
+  border-bottom: $darkerColour 1px solid;
+}
+
+#calendarAppointments > div.dateSeparator::after {
+  border-bottom: $darkColour 1.5px solid;
+}
+
+#calendarAppointments > div:last-child::after {
+  border-bottom: none !important;
 }
