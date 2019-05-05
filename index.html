@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      const config = {
+        googleCalendarApiKey: "<API KEY>",
+        googleCalendarIds: ["<ID1>", "<ID2>"],
+        daysToFetch: 7,
+        maxResults: -1,
+        calendarRealEstatePercentage: 70,
+        daySeparators: true,
+        showTime: true,
+        showDate: true,
+        locale: "en-GB",
+      };
+      </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>SmartDisplay</title>
+    <style>body,html{font-family:"Work Sans",Kayak,Manrope,"Google Sans","Product Sans","Segoe UI","Helvetica Neue",sans-serif;margin:8px 12px;padding:0;background:#000;color:#ddd}h1,h2,h3,h4,h5,p,span{margin:0;padding:0}#time .primary,#time .secondary{font-weight:200;font-variant-numeric:tabular-nums lining-nums}#time .primary{font-size:8rem;display:inline-block}#time .secondary{font-weight:300;font-size:4rem;display:inline-block;color:#aaa}#date .primary{font-weight:300;font-size:3rem;display:inline-block}#date .secondary{font-weight:100;font-size:2rem;display:inline-block;color:#aaa}#date .primary,#date .secondary{font-variant-numeric:tabular-nums lining-nums}#calendarAppointments{max-height:60%;max-height:60vh;position:absolute;bottom:0;left:0;right:0;overflow:hidden}#calendarAppointments::after{display:block;position:absolute;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,rgba(0,0,0,0)),to(black));background-image:linear-gradient(to bottom,rgba(0,0,0,0) 0,#000 100%);height:22rem;width:100%;bottom:0;content:""}#calendarAppointments>div{padding:8px;margin:auto;margin-bottom:2.25rem;width:85%;display:block}#calendarAppointments>div>h3{font-weight:300;font-size:2.5rem;margin-bottom:.5rem;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}#calendarAppointments>div span:first-of-type{float:left}#calendarAppointments>div span:last-of-type{float:right}#calendarAppointments>div p,#calendarAppointments>div span{display:block;font-weight:200;font-size:1.1rem;width:-webkit-max-content;width:-moz-max-content;width:max-content}#calendarAppointments>div>div::after{content:"";clear:both;display:table}#calendarAppointments>div::after{content:"\A0";position:absolute;height:1px;width:90%;margin-left:-2.5%;margin-top:1.5rem;border-bottom:#151515 1px solid}#calendarAppointments>div.dateSeparator::after{border-bottom:#222 1.5px solid}#calendarAppointments>div:last-child::after{border-bottom:none!important}</style>
+    <link
+      href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section id="time">
+      <h1 class="primary">
+        Loading...
+      </h1>
+      <h3 class="secondary"></h3>
+    </section>
+    <section id="date">
+      <h1 class="primary">
+        Loading...
+      </h1>
+      <h3 class="secondary"></h3>
+    </section>
+    <section id="calendarAppointments"></section>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>function UpdateTime(){if(!config.showTime)return $timePrimary.html(" "),void $timeSecondary.html(" ");let e=new Date;$timePrimary.html(e.toLocaleTimeString(config.locale,{hour:"2-digit",minute:"2-digit",second:void 0})),$timeSecondary.html(("0"+e.getSeconds()).slice(-2)),0===e.getSeconds()&&UpdateDate(),setTimeout(UpdateTime,1e3)}function UpdateDate(){if(!config.showDate)return $datePrimary.html(" "),void $dateSecondary.html(" ");let e=new Date;$datePrimary.html(e.toLocaleDateString(config.locale,{weekday:void 0,era:void 0,day:"2-digit",month:"2-digit",year:void 0})),$dateSecondary.html(e.toLocaleDateString(config.locale,{weekday:void 0,era:void 0,day:void 0,month:void 0,year:"numeric"}))}function FetchCalendarEvents(){let e=new Date,t=e.toISOString(),a=new Date(e.setDate(e.getDate()+config.daysToFetch)).toISOString(),n=[];return console.log("Refreshing calendar..."),config.googleCalendarIds.forEach(e=>{let o=googleCalendarUrl;o=o.replace("<ID>",e),o=o.replace("<KEY>",config.googleCalendarApiKey),o+=`&timeMin=${t}&timeMax=${a}`,-1!==config.maxResults&&(o+=`&maxResults=${config.maxResults}`),console.log("Pulling calendar data from: "+o),$.ajax({url:o,async:!1,cache:!1,success:function(e){e.items.forEach(e=>{let t=new Date(e.start[Object.keys(e.start)[0]]),a=new Date(e.end[Object.keys(e.end)[0]]),o=a-t==864e5;n.push({title:e.summary,start:t,end:a,allDay:o,location:void 0===e.location?null:e.location})})}})}),n}function UpdateCalendar(){let e=FetchCalendarEvents();e.sort((e,t)=>{let a=new Date(e.start),n=new Date(t.start);return a-n});for(let t=0;t<e.length;t++){const a=e[t];let n=GenerateEventDiv(a.title,a.location,a.start,a.end,a.allDay,e[t+1].start);$calendarContainer.append(n)}e.forEach(e=>{})}function GenerateEventDiv(e,t,a,n,o,l){null==lastDate&&(lastDate=a);let i=document.createElement("h3");i.innerHTML=e;let r=document.createElement("span");r.innerHTML=o?"All day":`${a.toLocaleTimeString(config.locale,{hour:"2-digit",minute:"2-digit",second:void 0})} until ${n.toLocaleTimeString(config.locale,{hour:"2-digit",minute:"2-digit",second:void 0})}`;let d=document.createElement("span");d.innerHTML=`on ${a.toLocaleDateString(config.locale)}`;let c=document.createElement("p");c.style.fontSize="0.9rem",c.style.marginTop="4px",null!==t&&(c.innerHTML="In "+t);let s=document.createElement("div");console.log(a.getDate()-lastDate.getDate()>=1),config.daySeparators&&void 0!==l&&(l.getDate()-a.getDate()>=1||l.getDate()-a.getDate()<=-1)?s.setAttribute("class","calendarEvent dateSeparator"):s.setAttribute("class","calendarEvent");let g=document.createElement("div");return g.appendChild(r),g.appendChild(d),s.appendChild(i),s.appendChild(g),null!==t&&s.appendChild(c),lastDate=a,s}const config={googleCalendarApiKey:"<API KEY>",googleCalendarIds:["<ID1>","<ID2>"],daysToFetch:7,maxResults:-1,calendarRealEstatePercentage:70,daySeparators:!0,showTime:!0,showDate:!0,locale:"en-GB"};console.log("Config loaded!"),console.log(config);const googleCalendarUrl="https://www.googleapis.com/calendar/v3/calendars/<ID>/events?key=<KEY>",$timePrimary=$("#time .primary"),$timeSecondary=$("#time .secondary"),$datePrimary=$("#date .primary"),$dateSecondary=$("#date .secondary"),$calendarContainer=$("#calendarAppointments");$calendarContainer.css("max-height",`${config.calendarRealEstatePercentage}%`);let lastDate=null;UpdateTime(),UpdateDate(),UpdateCalendar();
+</script>
+</html>

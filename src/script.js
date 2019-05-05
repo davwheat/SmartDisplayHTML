@@ -36,7 +36,7 @@ function UpdateTime() {
   let today = new Date();
 
   $timePrimary.html(
-    today.toLocaleTimeString("en-GB", {
+    today.toLocaleTimeString(config.locale, {
       hour: "2-digit",
       minute: "2-digit",
       second: undefined,
@@ -125,7 +125,6 @@ function FetchCalendarEvents() {
 
 function UpdateCalendar() {
   let calendarEvents = FetchCalendarEvents();
-  console.log(calendarEvents[0]);
 
   calendarEvents.sort((a, b) => {
     let dateA = new Date(a.start);
@@ -144,8 +143,6 @@ function UpdateCalendar() {
       calendarEvent.allDay,
       calendarEvents[i + 1].start
     );
-
-    console.log(d);
 
     $calendarContainer.append(d);
   }
@@ -174,11 +171,11 @@ function GenerateEventDiv(
 
   let timePeriod = document.createElement("span");
   if (!allDay) {
-    timePeriod.innerHTML = `${startTime.toLocaleTimeString("en-GB", {
+    timePeriod.innerHTML = `${startTime.toLocaleTimeString(config.locale, {
       hour: "2-digit",
       minute: "2-digit",
       second: undefined,
-    })} until ${endTime.toLocaleTimeString("en-GB", {
+    })} until ${endTime.toLocaleTimeString(config.locale, {
       hour: "2-digit",
       minute: "2-digit",
       second: undefined,
@@ -188,7 +185,7 @@ function GenerateEventDiv(
   }
 
   let date = document.createElement("span");
-  date.innerHTML = `on ${startTime.toLocaleDateString("en-GB")}`;
+  date.innerHTML = `on ${startTime.toLocaleDateString(config.locale)}`;
 
   let locationText = document.createElement("p");
   locationText.style.fontSize = "0.9rem";
